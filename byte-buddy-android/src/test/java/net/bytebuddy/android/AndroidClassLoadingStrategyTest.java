@@ -2,12 +2,12 @@ package net.bytebuddy.android;
 
 import com.android.dx.dex.DexOptions;
 import com.android.dx.dex.cf.CfOptions;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.ClassFileVersion;
-import net.bytebuddy.description.type.TypeDescription;
-import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
-import net.bytebuddy.implementation.FixedValue;
+import com.github.shaded.bytebuddy.ByteBuddy;
+import com.github.shaded.bytebuddy.ClassFileVersion;
+import com.github.shaded.bytebuddy.description.type.TypeDescription;
+import com.github.shaded.bytebuddy.dynamic.DynamicType;
+import com.github.shaded.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import com.github.shaded.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.test.utility.MockitoRule;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
 
-import static net.bytebuddy.matcher.ElementMatchers.named;
+import static com.github.shaded.bytebuddy.matcher.ElementMatchers.named;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;

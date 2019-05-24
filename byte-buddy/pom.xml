@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -122,7 +123,8 @@
                                 </filter>
                             </filters>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>net.bytebuddy.build.Plugin$Engine$Default</mainClass>
                                 </transformer>
                             </transformers>
@@ -246,6 +248,67 @@
                                 <dependencySourceInclude>${project.groupId}:byte-buddy-dep</dependencySourceInclude>
                             </dependencySourceIncludes>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>shaded</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <version>${version.plugin.shade}</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                                <configuration>
+                                    <shadedArtifactAttached>false</shadedArtifactAttached>
+                                    <createDependencyReducedPom>true</createDependencyReducedPom>
+                                    <createSourcesJar>true</createSourcesJar>
+                                    <shadeSourcesContent>true</shadeSourcesContent>
+                                    <relocations>
+                                        <relocation>
+                                            <pattern>net.bytebuddy</pattern>
+                                            <shadedPattern>com.github.shaded.bytebuddy</shadedPattern>
+                                        </relocation>
+                                        <relocation>
+                                            <pattern>${shade.source}</pattern>
+                                            <shadedPattern>com.github.shaded.bytebuddy.jar.asm</shadedPattern>
+                                        </relocation>
+                                    </relocations>
+                                    <filters>
+                                        <filter>
+                                            <artifact>org.ow2.asm:asm-commons</artifact>
+                                            <includes>
+                                                <include>org/objectweb/asm/commons/AnnotationRemapper.class</include>
+                                                <include>org/objectweb/asm/commons/ClassRemapper.class</include>
+                                                <include>org/objectweb/asm/commons/FieldRemapper.class</include>
+                                                <include>org/objectweb/asm/commons/MethodRemapper.class</include>
+                                                <include>org/objectweb/asm/commons/ModuleHashesAttribute.class</include>
+                                                <include>org/objectweb/asm/commons/ModuleRemapper.class</include>
+                                                <include>org/objectweb/asm/commons/Remapper.class</include>
+                                                <include>org/objectweb/asm/commons/SignatureRemapper.class</include>
+                                                <include>org/objectweb/asm/commons/SimpleRemapper.class</include>
+                                            </includes>
+                                        </filter>
+                                    </filters>
+                                    <transformers>
+                                        <transformer
+                                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                            <mainClass>net.bytebuddy.build.Plugin$Engine$Default</mainClass>
+                                        </transformer>
+                                    </transformers>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

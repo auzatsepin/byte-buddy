@@ -23,12 +23,12 @@ import com.android.dx.dex.DexOptions;
 import com.android.dx.dex.cf.CfOptions;
 import com.android.dx.dex.cf.CfTranslator;
 import com.android.dx.dex.file.DexFile;
+import com.github.shaded.bytebuddy.description.type.TypeDescription;
+import com.github.shaded.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import com.github.shaded.bytebuddy.utility.RandomString;
 import dalvik.system.BaseDexClassLoader;
 import dalvik.system.DexClassLoader;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import net.bytebuddy.description.type.TypeDescription;
-import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
-import net.bytebuddy.utility.RandomString;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -55,8 +55,8 @@ import java.util.logging.Logger;
  * {@code getCodeCacheDir} directory which is exposed for Android API versions 21 or higher.
  * </p>
  * <p>
- * By default, this Android {@link net.bytebuddy.dynamic.loading.ClassLoadingStrategy} uses the Android SDK's dex compiler in
- * <i>version 1.7</i> which requires the Java class files in version {@link net.bytebuddy.ClassFileVersion#JAVA_V6} as
+ * By default, this Android {@link com.github.shaded.bytebuddy.dynamic.loading.ClassLoadingStrategy} uses the Android SDK's dex compiler in
+ * <i>version 1.7</i> which requires the Java class files in version {@link com.github.shaded.bytebuddy.ClassFileVersion#JAVA_V6} as
  * its input. This version is slightly outdated but newer versions are not available in Maven Central which is why this
  * outdated version is included with this class loading strategy. Newer version can however be easily adapted by
  * implementing the methods of a {@link net.bytebuddy.android.AndroidClassLoadingStrategy.DexProcessor} to
